@@ -1,6 +1,8 @@
 import hashlib
-from os import path
+from os import system
+from os.path import basename, dirname, splitext, isfile
 from sys import argv
+
 
 """
 Подсчет хэшей файла и вывод хэш-суммы в файл.
@@ -20,12 +22,27 @@ def hash_file(hashfunc, filepath):
     return hash_sum.hexdigest()
 
 
-if __name__ == "__main__":
-    file_name = path.splitext(path.basename(argv[2]))[0]
-    path_to_file = path.splitext(path.dirname(argv[2]))[0]
-    output = hash_file(argv[1], argv[2])
+file_name = splitext(basename(argv[2]))[0]
+path_to_file = splitext(dirname(argv[2]))[0]
 
+if isfile(argv[2]) is False:
+    print("========================================")
+    print(f'File "{argv[2]}" not found!!! Try again!!!')
+    print("========================================")
+    system("pause")
+elif argv[1] not in hashlib.algorithms_available:
+    print("========================================")
+    print(f'Unsupported hash algorithm - "{argv[1]}"!!! Try again!!!')
+    print("========================================")
+    system("pause")
+else:
+    output = hash_file(argv[1], argv[2])
     with open(
         f"{path_to_file}\{file_name}.{argv[1]}", mode="w", encoding="UTF-8"
     ) as hfile:
         hfile.write(output)
+    print("========================================")
+    print(output)
+    print(f"hash file saved: {path_to_file}\{file_name}.{argv[1]}")
+    print("========================================")
+    system("pause")
