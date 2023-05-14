@@ -30,19 +30,38 @@ if isfile(argv[2]) is False:
     print(f'File "{argv[2]}" not found!!! Try again!!!')
     print("========================================")
     system("pause")
+
 elif argv[1] not in hashlib.algorithms_available:
     print("========================================")
     print(f'Unsupported hash algorithm - "{argv[1]}"!!! Try again!!!')
     print("========================================")
     system("pause")
+
 else:
     output = hash_file(argv[1], argv[2])
-    with open(
-        f"{path_to_file}\{file_name}.{argv[1]}", mode="w", encoding="UTF-8"
-    ) as hfile:
-        hfile.write(output)
-    print("========================================")
-    print(output)
-    print(f"hash file saved: {path_to_file}\{file_name}.{argv[1]}")
-    print("========================================")
-    system("pause")
+    if isfile(f"{path_to_file}\{file_name}.{argv[1]}") is True:
+        with open(
+            f"{path_to_file}\{file_name}.{argv[1]}", mode="r", encoding="UTF-8"
+        ) as hfile:
+            line = hfile.readline()
+            if line == output:
+                print("========================================")
+                print(f'File "{argv[2]}" checked - hash is match')
+                print("========================================")
+                system("pause")
+            elif line != output:
+                print("========================================")
+                print(f'File "{argv[2]}" checked - hash is not matched')
+                print("========================================")
+                system("pause")
+
+    else:
+        with open(
+            f"{path_to_file}\{file_name}.{argv[1]}", mode="w", encoding="UTF-8"
+        ) as hfile:
+            hfile.write(output)
+        print("========================================")
+        print(output)
+        print(f"hash file saved: {path_to_file}\{file_name}.{argv[1]}")
+        print("========================================")
+        system("pause")
