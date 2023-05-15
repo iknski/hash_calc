@@ -46,6 +46,10 @@ elif argv[1] not in hashlib.algorithms_available:
         Fore.RED
         + f"Unsupported hash algorithm {Fore.YELLOW + argv[1] + Fore.RESET}{Fore.RED}. Try again!!!"
     )
+    print("-----------------------------------------------------------------")
+    print("Поддерживаемые алгоритмы:")
+    print("Suported algorithms:")
+    print(Fore.GREEN + f"{hashlib.algorithms_available}")
     print("=================================================================")
     system("pause")
 
