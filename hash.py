@@ -1,6 +1,6 @@
 import hashlib
 from os import system
-from os.path import basename, dirname, splitext, isfile
+from os.path import basename, dirname, splitdrive, splitext, isfile
 from sys import argv
 from rich import box
 from rich.console import Console
@@ -21,7 +21,9 @@ def hash_file(hashfunc, filepath):
 
 
 file_name = splitext(basename(argv[2]))[0]
-path_to_file = splitext(dirname(argv[2]))[0]
+path_to_file = str()
+for _ in splitdrive(dirname(argv[2])):
+    path_to_file += _
 
 # Проверка правильности ввода пути файла
 if isfile(argv[2]) is False:
